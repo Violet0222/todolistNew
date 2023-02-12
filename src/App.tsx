@@ -41,16 +41,29 @@ function App() {
     setTasks([newInputTitle, ...tasksState]);
     setInputTitle(" ");
   };
+  const onChangeTaskStatus = (taskId: string, eventStatus: boolean) => {
+    // let task = tasksState.find((t) => t.id === taskId);
+    // if (task) {
+    //   task.isDone = isDone;
+    // }
+    setTasks(
+      tasksState.map((el) =>
+        el.id === taskId ? { ...el, isDone: eventStatus } : el
+      )
+    );
+  };
   return (
     <div className="App">
       <ToDoList
         title={"What to do?"}
+        filter={filter}
         filteredTasks={filteredTasks}
         handleRemoveClick={handleRemoveClick}
         handActiveClick={handActiveClick}
         inputTitle={inputTitle}
         setInputTitle={setInputTitle}
         addTitle={addTitle}
+        onChangeTaskStatus={onChangeTaskStatus}
       />
     </div>
   );

@@ -20,9 +20,9 @@ export const Input = ({
 
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
-
     if (onEnter && event.key === "Enter") {
       onEnter();
+      return;
     }
   };
 

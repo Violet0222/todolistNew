@@ -1,0 +1,12 @@
+.inputError{
+   border-color: red;
+}
+.error{
+    color: red;
+}
+.activeFilter {
+    background: deepskyblue;
+}
+.isDone{
+    opacity: 0.5;
+}
