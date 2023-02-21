@@ -4,8 +4,16 @@ import "./App.css";
 import { ToDoList } from "./ToDoList";
 
 export type FilteredTaskType = "All" | "Active" | "Completed";
-
+type ToDoListType = {
+  id: string;
+  title: string;
+  filter: FilteredTaskType;
+};
 function App() {
+  const [toDoListState, setToDoListState] = useState<Array<ToDoListType>>([
+    { id: v1(), title: "what to do", filter: "All" },
+    { id: v1(), title: "what to buy", filter: "All" },
+  ]);
   const [tasksState, setTasks] = useState([
     { id: v1(), name: "HTML&CSS", isDone: true },
     { id: v1(), name: "JS", isDone: true },
@@ -52,19 +60,24 @@ function App() {
       )
     );
   };
+
   return (
     <div className="App">
-      <ToDoList
-        title={"What to do?"}
-        filter={filter}
-        filteredTasks={filteredTasks}
-        handleRemoveClick={handleRemoveClick}
-        handActiveClick={handActiveClick}
-        inputTitle={inputTitle}
-        setInputTitle={setInputTitle}
-        addTitle={addTitle}
-        onChangeTaskStatus={onChangeTaskStatus}
-      />
+      {toDoListState.map((list) => {
+        return (
+          <ToDoList
+            title={list.title}
+            filter={list.filter}
+            filteredTasks={filteredTasks}
+            handleRemoveClick={handleRemoveClick}
+            handActiveClick={handActiveClick}
+            inputTitle={inputTitle}
+            setInputTitle={setInputTitle}
+            addTitle={addTitle}
+            onChangeTaskStatus={onChangeTaskStatus}
+          />
+        );
+      })}
     </div>
   );
 }
