@@ -1,3 +1,7 @@
+.titleWrapper{
+    display: flex;
+    flex-direction: row;
+}
 .inputError{
    border-color: red;
 }

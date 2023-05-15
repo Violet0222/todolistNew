@@ -4,7 +4,7 @@ type DefaultInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 type InputPropsType = DefaultInputProps & {
   onValueChange?: (value: string) => void;
-  onEnter?: () => void;
+  onEnter?: (toDoListID: string, title: string) => void;
 };
 export const Input = ({
   onValueChange,
@@ -21,7 +21,7 @@ export const Input = ({
   const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
     if (onEnter && event.key === "Enter") {
-      onEnter();
+      onEnter(event.currentTarget.id, event.currentTarget.value);
       return;
     }
   };
