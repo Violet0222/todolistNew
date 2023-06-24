@@ -1,6 +1,7 @@
 .titleWrapper{
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 .inputError{
    border-color: red;

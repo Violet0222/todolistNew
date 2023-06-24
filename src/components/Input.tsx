@@ -1,16 +1,19 @@
-import { ChangeEvent, InputHTMLAttributes, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 
-type DefaultInputProps = InputHTMLAttributes<HTMLInputElement>;
+type DefaultInputProps = Omit<TextFieldProps, "error">;
 
-type InputPropsType = DefaultInputProps & {
+type InputPropsType = {
   onValueChange?: (value: string) => void;
   onEnter?: (toDoListID: string, title: string) => void;
-};
+  error?: string | null;
+} & DefaultInputProps;
 export const Input = ({
   onValueChange,
   onEnter,
   onChange,
   onKeyDown,
+  error,
   ...rest
 }: InputPropsType) => {
   const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,9 +30,14 @@ export const Input = ({
   };
 
   return (
-    <input
+    <TextField
+      variant="outlined"
+      label="Type value"
+      id="outlined-error"
       onChange={onChangeInputHandler}
       onKeyDown={onKeyPressHandler}
+      error={!!error}
+      helperText={error}
       {...rest}
     />
   );

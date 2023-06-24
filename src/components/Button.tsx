@@ -4,6 +4,6 @@ type DefaultButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
 type ButtonPropsType = DefaultButtonProps & {};
 
-export const Button = ({ ...rest }: ButtonPropsType) => {
+const Button = ({ ...rest }: ButtonPropsType) => {
   return <button {...rest} />;
 };

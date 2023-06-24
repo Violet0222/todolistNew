@@ -5,10 +5,22 @@ import React, {
   useState,
 } from "react";
 import { FilteredTaskType } from "./App";
-import { Button } from "./components/Button";
+// import { Button } from "./components/Button";
+import Button from "@mui/material/Button";
 import { Input } from "./components/Input";
 import s from "./ToDoList.module.css";
 import { AddTaskInput } from "./components/AddTaskInput";
+import { EditableTask } from "./components/EditableTask";
+import {
+  ButtonGroup,
+  Checkbox,
+  createMuiTheme,
+  IconButton,
+  ThemeProvider,
+} from "@mui/material";
+import { CheckCircle, Delete, Favorite } from "@mui/icons-material";
+import { purple } from "@mui/material/colors";
+import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 
 export type Task = {
   id: string;
@@ -34,8 +46,30 @@ type FilteredPropsTitle = {
     taskID: string,
     eventStatus: boolean
   ) => void;
+  changeTaskTitle: ({
+    toDoListID,
+    taskID,
+    newValue,
+  }: {
+    toDoListID: string;
+    taskID: string;
+    newValue: string;
+  }) => void;
+  changeTodolistTitle: ({
+    toDoListID,
+    newValue,
+  }: {
+    toDoListID: string;
+    newValue: string;
+  }) => void;
 };
-
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#e1bee7",
+    },
+  },
+});
 export const ToDoList = (props: FilteredPropsTitle) => {
   const onRemoveToDoListHandler = () =>
     props.handleToDoListRemoveClick(props.toDoListID);
@@ -47,15 +81,29 @@ export const ToDoList = (props: FilteredPropsTitle) => {
     props.handActiveClick(props.toDoListID, "Completed");
   const onChangeHandler = (taskId: string, e: boolean) =>
     props.onChangeTaskStatus(props.toDoListID, taskId, e);
+
   const addTask = (title: string) => {
-    props.addTask(title, props.toDoListID);
+    props.addTask(props.toDoListID, title);
+  };
+  const onChangeTodolistTitleHandler = (newValue: string) => {
+    props.changeTodolistTitle({
+      toDoListID: props.toDoListID,
+      newValue,
+    });
   };
   return (
     <div>
       <div>
         <div className={s.titleWrapper}>
-          <h3>{props.title}</h3>
-          <Button onClick={onRemoveToDoListHandler}>x</Button>
+          <h3>
+            <EditableTask
+              name={props.title}
+              onChange={onChangeTodolistTitleHandler}
+            />
+          </h3>
+          <IconButton aria-label="delete" onClick={onRemoveToDoListHandler}>
+            <DeleteForeverTwoToneIcon sx={{ color: purple[100] }} />
+          </IconButton>
         </div>
         <div>
           <AddTaskInput addTask={addTask} />
@@ -66,40 +114,66 @@ export const ToDoList = (props: FilteredPropsTitle) => {
               props.handleRemoveClick(props.toDoListID, task.id);
             //const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
             // props.onChangeTaskStatus(task.id, e.currentTarget.checked);
+            const onChangeTitleHandler = (newValue: string) => {
+              props.changeTaskTitle({
+                toDoListID: props.toDoListID,
+                taskID: task.id,
+                newValue,
+              });
+            };
             return (
-              <li key={task.id} className={task.isDone ? s.isDone : ""}>
-                <input
-                  type="checkbox"
+              <div key={task.id} className={task.isDone ? s.isDone : ""}>
+                <Checkbox
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     onChangeHandler(task.id, e.currentTarget.checked)
                   }
                   checked={task.isDone}
+                  defaultChecked
+                  sx={{
+                    color: purple[800],
+                    "&.Mui-checked": {
+                      color: purple[600],
+                    },
+                  }}
+                  icon={<Favorite />}
+                  checkedIcon={<CheckCircle />}
+                  size={"small"}
                 />
-                <span>{task.name}</span>
-                <Button onClick={onRemoveHandler}>x</Button>
-              </li>
+
+                <EditableTask
+                  name={task.name}
+                  onChange={onChangeTitleHandler}
+                />
+                <IconButton aria-label="delete" onClick={onRemoveHandler}>
+                  <DeleteForeverTwoToneIcon sx={{ color: purple[100] }} />
+                </IconButton>
+              </div>
             );
           })}
         </ul>
         <div>
-          <Button
-            onClick={onAllTasksClickHandler}
-            className={props.filter === "All" ? s.activeFilter : ""}
-          >
-            All
-          </Button>
-          <Button
-            onClick={onActiveTasksClickHandler}
-            className={props.filter === "Active" ? s.activeFilter : ""}
-          >
-            Active
-          </Button>
-          <Button
-            onClick={onCompletedTasksClickHandler}
-            className={props.filter === "Completed" ? s.activeFilter : ""}
-          >
-            Completed
-          </Button>
+          <ThemeProvider theme={theme}>
+            <ButtonGroup aria-label="outlined button group" size="small">
+              <Button
+                onClick={onAllTasksClickHandler}
+                variant={props.filter === "All" ? "contained" : "text"}
+              >
+                All
+              </Button>
+              <Button
+                onClick={onActiveTasksClickHandler}
+                variant={props.filter === "Active" ? "contained" : "text"}
+              >
+                Active
+              </Button>
+              <Button
+                onClick={onCompletedTasksClickHandler}
+                variant={props.filter === "Completed" ? "contained" : "text"}
+              >
+                Completed
+              </Button>
+            </ButtonGroup>
+          </ThemeProvider>
         </div>
       </div>
     </div>

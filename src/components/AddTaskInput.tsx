@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Input } from "./Input";
 import s from "../ToDoList.module.css";
-import { Button } from "./Button";
+// import { Button } from "./Button";
+import IconButton from "@mui/material/IconButton";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+import { purple } from "@mui/material/colors";
 
 type addTaskInputType = {
   addTask: (title: string) => void;
@@ -13,8 +16,9 @@ export const AddTaskInput = (props: addTaskInputType) => {
     if (inputTitle.trim() !== "") {
       props.addTask(inputTitle.trim());
       setInputTitle("");
+      setError(null);
     } else {
-      setError("The input cannot be empty.");
+      setError("The input can't be empty");
       // props.setInputTitle("");
       // props.addTitle();
     }
@@ -25,15 +29,19 @@ export const AddTaskInput = (props: addTaskInputType) => {
         value={inputTitle}
         onValueChange={setInputTitle}
         onEnter={onAddTaskClickHandler}
-        className={error ? s.inputError : ""}
+        // className={error ? s.inputError : ""}
         onKeyDown={() => {
           if (error) {
             setError(null);
           }
         }}
+        error={error}
       />
-      <Button onClick={onAddTaskClickHandler}>+</Button>
-      <div> {error && <div className={s.error}>{error}</div>}</div>
+      <IconButton aria-label="add" onClick={onAddTaskClickHandler}>
+        <PlaylistAddOutlinedIcon sx={{ color: purple[900] }} />
+      </IconButton>
+
+      {/*<div> {error && <div className={s.error}>{error}</div>}</div>*/}
     </div>
   );
 };
