@@ -1,25 +1,16 @@
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  MouseEventHandler,
-  useState,
-} from "react";
+import React from "react";
 import { FilteredTaskType } from "./App";
 // import { Button } from "./components/Button";
 import Button from "@mui/material/Button";
-import { Input } from "./components/Input";
 import s from "./ToDoList.module.css";
 import { AddTaskInput } from "./components/AddTaskInput";
 import { EditableTask } from "./components/EditableTask";
 import {
   ButtonGroup,
-  Checkbox,
-  createMuiTheme,
   createTheme,
   IconButton,
   ThemeProvider,
 } from "@mui/material";
-import { CheckCircle, Delete, Favorite } from "@mui/icons-material";
 import { purple } from "@mui/material/colors";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
 import { SuperCheckBox } from "./components/SuperCheckBox";
@@ -29,11 +20,6 @@ export type Task = {
   name: string;
   isDone: boolean;
 };
-// type PropsTitle = {
-//   title: string;
-//   myNumber?: number;
-//   tasks: Array<Task>;
-// };
 type FilteredPropsTitle = {
   toDoListID: string;
   title: string;
