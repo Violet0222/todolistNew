@@ -7,7 +7,7 @@ export const todolistReducer = (
   switch (action.type) {
     case "REMOVE-TODOLIST": {
       const updatedState = state.filter(
-        (toDoList) => toDoList.id !== action.payload.toDoListID
+        (toDoList) => toDoList.id !== action.id.toDoListID
       );
       return updatedState;
     }
@@ -49,7 +49,7 @@ type handleToDoListRemoveClickACType = ReturnType<
   typeof handleToDoListRemoveClickAC
 >;
 export const handleToDoListRemoveClickAC = (toDoListID: string) => {
-  return { type: "REMOVE-TODOLIST", payload: { toDoListID } } as const;
+  return { type: "REMOVE-TODOLIST", id: { toDoListID } } as const;
 };
 
 type handActiveClickACType = ReturnType<typeof handActiveClickAC>;

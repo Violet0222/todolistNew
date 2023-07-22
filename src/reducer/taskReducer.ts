@@ -29,7 +29,7 @@ export const taskReducer = (
       };
     }
     case "CHANGE-TASK-TITLE": {
-      const newTasks = {
+      const newTask = {
         ...state,
         [action.payload.toDoListID]: state[action.payload.toDoListID].map(
           (el) =>
@@ -38,10 +38,20 @@ export const taskReducer = (
               : el
         ),
       };
-      return newTasks;
+      return newTask;
     }
     case "EMPTY-TASK-ARRAY-FOR-TODOLIST": {
       return { ...state, [action.payload.newTodolistID]: [] };
+    }
+    case "CHANGE-TASK-STATUS": {
+      const taskStatus = {
+        ...state,
+        [action.payload.toDoListID]: state[action.payload.toDoListID].map(
+          (el) =>
+            el.id === action.payload.taskID ? { ...el, isDone: !el.isDone } : el
+        ),
+      };
+      return taskStatus;
     }
 
     default:

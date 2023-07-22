@@ -15,12 +15,14 @@ import {
   ButtonGroup,
   Checkbox,
   createMuiTheme,
+  createTheme,
   IconButton,
   ThemeProvider,
 } from "@mui/material";
 import { CheckCircle, Delete, Favorite } from "@mui/icons-material";
 import { purple } from "@mui/material/colors";
 import DeleteForeverTwoToneIcon from "@mui/icons-material/DeleteForeverTwoTone";
+import { SuperCheckBox } from "./components/SuperCheckBox";
 
 export type Task = {
   id: string;
@@ -63,7 +65,7 @@ type FilteredPropsTitle = {
     newValue: string;
   }) => void;
 };
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
       main: "#e1bee7",
@@ -79,8 +81,6 @@ export const ToDoList = (props: FilteredPropsTitle) => {
     props.handActiveClick(props.toDoListID, "Active");
   const onCompletedTasksClickHandler = () =>
     props.handActiveClick(props.toDoListID, "Completed");
-  const onChangeHandler = (taskId: string, e: boolean) =>
-    props.onChangeTaskStatus(props.toDoListID, taskId, e);
 
   const addTask = (title: string) => {
     props.addTask(props.toDoListID, title);
@@ -90,6 +90,10 @@ export const ToDoList = (props: FilteredPropsTitle) => {
       toDoListID: props.toDoListID,
       newValue,
     });
+  };
+
+  const onChangeStatusHandler = (taskID: string, changeEvent: boolean) => {
+    props.onChangeTaskStatus(props.toDoListID, taskID, changeEvent);
   };
   return (
     <div>
@@ -110,6 +114,15 @@ export const ToDoList = (props: FilteredPropsTitle) => {
         </div>
         <ul>
           {props.filteredTasks.map((task) => {
+            // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            //   let newIsDoneValue = e.currentTarget.checked;
+            //   props.onChangeTaskStatus(
+            //     props.toDoListID,
+            //     task.id,
+            //     newIsDoneValue
+            //   );
+            // };
+
             const onRemoveHandler = () =>
               props.handleRemoveClick(props.toDoListID, task.id);
             //const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) =>
@@ -123,21 +136,11 @@ export const ToDoList = (props: FilteredPropsTitle) => {
             };
             return (
               <div key={task.id} className={task.isDone ? s.isDone : ""}>
-                <Checkbox
-                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                    onChangeHandler(task.id, e.currentTarget.checked)
+                <SuperCheckBox
+                  callback={(changeEvent) =>
+                    onChangeStatusHandler(task.id, changeEvent)
                   }
                   checked={task.isDone}
-                  defaultChecked
-                  sx={{
-                    color: purple[800],
-                    "&.Mui-checked": {
-                      color: purple[600],
-                    },
-                  }}
-                  icon={<Favorite />}
-                  checkedIcon={<CheckCircle />}
-                  size={"small"}
                 />
 
                 <EditableTask

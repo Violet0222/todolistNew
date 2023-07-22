@@ -106,7 +106,6 @@ function App() {
     let newTodolistID = v1();
     dispatchToDoListState(addTodolistAC(title, newTodolistID));
     dispatchTasks(emptyTaskArrayforTodolistAC(newTodolistID));
-    // setTasks({ ...tasksState, [newTodolist.id]: [] });
   };
   return (
     <div className="App">
