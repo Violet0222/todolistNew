@@ -1,6 +1,5 @@
 import React from "react";
 import { FilteredTaskType } from "./App";
-// import { Button } from "./components/Button";
 import Button from "@mui/material/Button";
 import s from "./ToDoList.module.css";
 import { AddTaskInput } from "./components/AddTaskInput";
