@@ -45,7 +45,7 @@ type mainType =
   | changeTodolistTitleACType
   | addTodolistACType;
 
-type handleToDoListRemoveClickACType = ReturnType<
+export type handleToDoListRemoveClickACType = ReturnType<
   typeof handleToDoListRemoveClickAC
 >;
 export const handleToDoListRemoveClickAC = (toDoListID: string) => {
@@ -68,7 +68,7 @@ export const changeTodolistTitleAC = (toDoListID: string, newValue: string) => {
   } as const;
 };
 
-type addTodolistACType = ReturnType<typeof addTodolistAC>;
+export type addTodolistACType = ReturnType<typeof addTodolistAC>;
 export const addTodolistAC = (title: string, newTodolistID: string) => {
   return {
     type: "ADD-TODOLIST",

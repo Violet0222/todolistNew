@@ -1,5 +1,9 @@
 import { TasksStateType } from "../App";
 import { v1 } from "uuid";
+import {
+  addTodolistACType,
+  handleToDoListRemoveClickACType,
+} from "./todolist-reducer";
 
 export const taskReducer = (
   state: TasksStateType,
@@ -40,8 +44,21 @@ export const taskReducer = (
       };
       return newTask;
     }
-    case "EMPTY-TASK-ARRAY-FOR-TODOLIST": {
+    // case "EMPTY-TASK-ARRAY-FOR-TODOLIST": {
+    //   return { ...state, [action.payload.newTodolistID]: [] };
+    // }
+    case "ADD-TODOLIST": {
       return { ...state, [action.payload.newTodolistID]: [] };
+    }
+    case "REMOVE-TODOLIST": {
+      const {
+        [action.id.toDoListID]: [],
+        ...rest
+      } = state;
+      return rest;
+      // let copyState = { ...state };
+      // delete copyState[action.id.toDoListID];
+      // return copyState;
     }
     case "CHANGE-TASK-STATUS": {
       const taskStatus = {
@@ -64,7 +81,9 @@ type TsarType =
   | addTaskACType
   | onChangeTaskStatusACType
   | changeTaskTitleACType
-  | emptyTaskArrayforTodolistACType;
+  // | emptyTaskArrayforTodolistACType
+  | addTodolistACType
+  | handleToDoListRemoveClickACType;
 type handleRemoveClickACType = ReturnType<typeof handleRemoveClickAC>;
 export const handleRemoveClickAC = (toDoListID: string, taskID: string) => {
   return {
@@ -105,12 +124,12 @@ export const changeTaskTitleAC = (
   } as const;
 };
 
-type emptyTaskArrayforTodolistACType = ReturnType<
-  typeof emptyTaskArrayforTodolistAC
->;
-export const emptyTaskArrayforTodolistAC = (newTodolistID: string) => {
-  return {
-    type: "EMPTY-TASK-ARRAY-FOR-TODOLIST",
-    payload: { newTodolistID },
-  } as const;
-};
+// type emptyTaskArrayforTodolistACType = ReturnType<
+//   typeof emptyTaskArrayforTodolistAC
+// >;
+// export const emptyTaskArrayforTodolistAC = (newTodolistID: string) => {
+//   return {
+//     type: "EMPTY-TASK-ARRAY-FOR-TODOLIST",
+//     payload: { newTodolistID },
+//   } as const;
+// };

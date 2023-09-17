@@ -15,11 +15,11 @@ import Paper from "@mui/material/Paper";
 import {
   addTaskAC,
   changeTaskTitleAC,
-  emptyTaskArrayforTodolistAC,
+  // emptyTaskArrayforTodolistAC,
   handleRemoveClickAC,
   onChangeTaskStatusAC,
   taskReducer,
-} from "./reducer/taskReducer";
+} from "./state/taskReducer";
 import {
   addTodolistAC,
   changeTodolistTitleAC,
@@ -105,7 +105,8 @@ function App() {
   const addTodolist = (title: string) => {
     let newTodolistID = v1();
     dispatchToDoListState(addTodolistAC(title, newTodolistID));
-    dispatchTasks(emptyTaskArrayforTodolistAC(newTodolistID));
+    // dispatchTasks(emptyTaskArrayforTodolistAC(newTodolistID));
+    dispatchTasks(addTodolistAC(title, newTodolistID));
   };
   return (
     <div className="App">
