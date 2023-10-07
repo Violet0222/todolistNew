@@ -1,7 +1,14 @@
 import { FilteredTaskType, ToDoListType } from "../App";
+import { v1 } from "uuid";
 
+export let toDoListState1 = v1();
+export let toDoListState2 = v1();
+const initialState: ToDoListType[] = [
+  { id: toDoListState1, title: "What to do", filter: "All" },
+  { id: toDoListState2, title: "What to buy", filter: "All" },
+];
 export const todolistReducer = (
-  state: ToDoListType[],
+  state: ToDoListType[] = initialState,
   action: mainType
 ): ToDoListType[] => {
   switch (action.type) {

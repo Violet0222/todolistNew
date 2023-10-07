@@ -4,9 +4,22 @@ import {
   addTodolistACType,
   handleToDoListRemoveClickACType,
 } from "./todolist-reducer";
+import { toDoListState1, toDoListState2 } from "../reducer/todolistReducer";
 
+const initialState: TasksStateType = {
+  [toDoListState1]: [
+    { id: v1(), name: "HTML&CSS", isDone: true },
+    { id: v1(), name: "JS", isDone: true },
+    { id: v1(), name: "React", isDone: false },
+  ],
+  [toDoListState2]: [
+    { id: v1(), name: "HTML&CSS", isDone: true },
+    { id: v1(), name: "JS", isDone: true },
+    { id: v1(), name: "React", isDone: false },
+  ],
+};
 export const taskReducer = (
-  state: TasksStateType,
+  state: TasksStateType = initialState,
   action: TsarType
 ): TasksStateType => {
   switch (action.type) {
